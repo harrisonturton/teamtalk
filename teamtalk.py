@@ -16,7 +16,7 @@ print("--------------")
 
 # Define the app & routes
 app = Flask(__name__)
-slack_client = SlackClient(VERIFICATION_TOKEN)
+slack_client = SlackClient(BOT_ACC_TOKEN)
 
 @app.route("/send", methods=["POST"])
 def hello():

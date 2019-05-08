@@ -19,6 +19,7 @@ print("--------------")
 app = Flask(__name__)
 client = Client(BOT_ACC_TOKEN)
 
+# Handles slash commands
 @app.route("/commands", methods=["POST"])
 def commands():
     print(request.form)
@@ -28,6 +29,17 @@ def commands():
         abort(401)
     # Delegate command to handlers
     return handle(client, request)
+
+# Handles dialog submissions, button clicks, etc
+@app.route("/callbacks", methods=["POST"])
+def commands():
+    print(request.form)
+    # Validate token
+    token = request.form.get("token", None)
+    if token != VERIFICATION_TOKEN:
+        abort(401)
+    return "OK!"
+
 
 # Finally, run the damn thing
 if __name__ == "__main__":

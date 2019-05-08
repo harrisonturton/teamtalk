@@ -18,24 +18,20 @@ print("--------------")
 app = Flask(__name__)
 client = Client(BOT_ACC_TOKEN)
 
+def handleSend(text):
+    print(text)
+    return "Got send: " + text
+
+def handlePoll(text):
+    print(text)
+    return "Got poll: " + text
+
 commands = {
     "send": handleSend,
     "poll": handlePoll
 }
 
 @app.route("/commands", methods=["POST"])
-def commands():
-    print(request.form)
-    token = request.form.get("token", None)
-    command = request.form.get("command", None)
-    text = request.form.get("text", None)
-    channel_id = request.form.get("channel_id", None)
-    if not token or token != VERIFICATION_TOKEN:
-        abort(400)
-    if channel_id:
-        client.message(channel_id, "Hello from backend! :tada:")
-    return "Hello from Teamtalk!"
-
 def commands():
     print(request.form)
     # Validate the token
@@ -48,15 +44,6 @@ def commands():
     if command not in commands:
         abort(400)
     return commands[command](text)
-
-def handleSend(text):
-    print(text)
-    return "Got send: " + text
-
-def handlePoll(text):
-    print(text)
-    return "Got poll: " + text
-
 
 # Finally, run the damn thing
 if __name__ == "__main__":

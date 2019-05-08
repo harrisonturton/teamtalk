@@ -20,6 +20,7 @@ slack_client = SlackClient(VERIFICATION_TOKEN)
 
 @app.route("/send", methods=["POST"])
 def hello():
+    print(request.form)
     token = request.form.get("token", None)
     command = request.form.get("command", None)
     text = request.form.get("text", None)

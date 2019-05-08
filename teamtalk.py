@@ -8,9 +8,9 @@ PORT               = getenv("PORT")
 
 # Pretty print server preamble
 print("--------------")
-print("Running on port ", PORT, "with:")
-print("Verification token: ", VERIFICATION_TOKEN)
-print("Bot User OAuth Access token: ", BOT_ACC_TOKEN)
+print("Running on port", PORT, "with:")
+print("Verification token:", VERIFICATION_TOKEN)
+print("Bot User OAuth Access token:", BOT_ACC_TOKEN)
 print("--------------")
 
 # Define the app & routes

@@ -27,25 +27,25 @@ def handle_poll(client, text, trigger_id):
                 "type": "text",
                 "label": "Option A",
                 "name": "poll-option-a",
-                "optional": False
+                "optional": True
             },
             {
                 "type": "text",
                 "label": "Option B",
                 "name": "poll-option-b",
-                "optional": False
+                "optional": True
             },
             {
                 "type": "text",
                 "label": "Option C",
                 "name": "poll-option-c",
-                "optional": False
+                "optional": True
             },
             {
                 "type": "text",
                 "label": "Option D",
                 "name": "poll-option-d",
-                "optional": False
+                "optional": True
             }
         ]
     })
@@ -61,10 +61,10 @@ handlers = {
     "/poll": handle_poll
 }
 
-def handle(client, request):
-    command = request.form.get("command", None)
-    text = request.form.get("text", None)
-    trigger_id = request.form.get("trigger_id", None)
+def handle_command(client, request):
+    command = request.form.get("command")
+    text = request.form.get("text")
+    trigger_id = request.form.get("trigger_id")
     if command not in handlers:
         abort(400)
     return handlers[command](client, text, trigger_id)

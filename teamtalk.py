@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify, abort, make_response
 from util import getenv 
 from client import Client
-from commands import handle
+from commands import handle_command
+from callbacks import handle_callback
 import json
 
 # Load constants from .env file
@@ -29,7 +30,7 @@ def commands():
     if token != VERIFICATION_TOKEN:
         abort(401)
     # Delegate command to handlers
-    return handle(client, request)
+    return handle_command(client, request)
 
 # Handles dialog submissions, button clicks, etc
 @app.route("/callbacks", methods=["POST"])
@@ -43,9 +44,7 @@ def callbacks():
     token = data.get("token")
     if token != VERIFICATION_TOKEN:
         abort(401)
-    if data.get("type") == "dialog_submission":
-        print("Handling dialog submission")
-    return make_response("", 200)
+    return handle_callback(client, data)
 
 
 # Finally, run the damn thing

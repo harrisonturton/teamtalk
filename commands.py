@@ -12,18 +12,21 @@ def handle_send(client, text, trigger_id):
     return "Sent message: {} to {}".format(message, destination)
 
 def handle_poll(client, text, trigger_id):
-    resp client.openDialog(trigger_id, {
+    resp = client.openDialog(trigger_id, {
         "title": "Create New Poll",
         "submit_label": "Create",
         "callback_id": "new-poll",
-        "elements": {
-            "type": "text",
-            "label": "Poll Question",
-            "name": "poll-question",
-            "optional": False
-        }
+        "elements": [
+            {
+                "type": "text",
+                "label": "Poll Question",
+                "name": "poll-question",
+                "optional": False
+            }
+        ]
     })
     if not resp.get("ok"):
+        print(resp)
         return "Failed to create poll."
     return "Created poll!"
 

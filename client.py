@@ -15,7 +15,7 @@ class Client:
     # Open a dialog
     def openDialog(self, trigger_id, dialog):
         return self.client.api_call(
-            "open.dialog",
+            "dialog.open",
             trigger_id=trigger_id,
             dialog=dialog
         )

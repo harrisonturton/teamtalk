@@ -8,3 +8,7 @@
 > source bin/activate
 > pip install -r requirements.txt
 ```
+
+```
+pip3 install flask slackclient python-dotenv
+```

@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify, abort
 from util import getenv 
 from slackclient import SlackClient
 
@@ -20,12 +20,19 @@ slack_client = SlackClient(VERIFICATION_TOKEN)
 
 @app.route("/send", methods=["POST"])
 def hello():
-    print(request.data)
-    slack_client.api_call(
-        "chat.postMessage",
-        channel="general",
-        text="Hello from Python!" 
-    )
+    token = request.form.get("token", None)
+    command = request.form.get("command", None)
+    text = request.form.get("text", None)
+    channel_id = request.form.get("channel_id", None)
+    if not token:
+        abort(400)
+    if channel_id:
+        slack_client.api_call(
+            "chat.postMessage",
+            channel=channel_id,
+            text="Sent a message! :tada:" 
+        )
+    return "Hello from Teamtalk!"
 
 # Finally, run the damn thing
 if __name__ == "__main__":

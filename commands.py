@@ -22,6 +22,30 @@ def handle_poll(client, text, trigger_id):
                 "label": "Poll Question",
                 "name": "poll-question",
                 "optional": False
+            },
+            {
+                "type": "text",
+                "label": "Option A",
+                "name": "poll-option-a",
+                "optional": False
+            },
+            {
+                "type": "text",
+                "label": "Option B",
+                "name": "poll-option-b",
+                "optional": False
+            },
+            {
+                "type": "text",
+                "label": "Option C",
+                "name": "poll-option-c",
+                "optional": False
+            },
+            {
+                "type": "text",
+                "label": "Option D",
+                "name": "poll-option-d",
+                "optional": False
             }
         ]
     })

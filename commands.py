@@ -1,4 +1,4 @@
-from flask import abort, jsonify
+from flask import abort, jsonify, make_response
 
 def handle_send(client, text, trigger_id):
     params = text.split(" ")
@@ -52,7 +52,7 @@ def handle_poll(client, text, trigger_id):
     if not resp.get("ok"):
         print(resp)
         return "Failed to create poll."
-    return "Created poll!"
+    return make_response("", 200)
 
 # Map the user-facing slash command to the
 # relevant handler.

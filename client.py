@@ -12,6 +12,13 @@ class Client:
             channel=channel,
             text=message
         )
+    def messageEphemeral(self, channel, user, message):
+        return self.client.api_call(
+            "chat.postEphemeral",
+            channel=channel,
+            text=message,
+            user=user
+        )
     # Open a dialog
     def openDialog(self, trigger_id, dialog):
         return self.client.api_call(

@@ -1,16 +1,15 @@
-from flask import abort
+from flask import abort, jsonify
 
 def handle_send(client, text):
     params = text.split(" ")
     if len(params) <= 1:
-        return "Usage: `/send @user message` or `/send #channel message`"
-    user = params[0]
+        return "Sorry! I don't understand that.\nUsage: `/send @user message` or `/send #channel message`"
+    destination = params[0]
     message = " ".join(params[1:])
-    resp = client.messageUser(user, message)
-    print(resp)
+    resp = client.messageUser(destination, "*Anonymous Message*:\n{}".format(message))
     if not resp.get("ok"):
-        return "Failed to send message!"
-    return "Sent message: " + message + " to " + user
+        return "_Failed to send message {} to {}_. Did you make a typo?".format(message, destination),
+    return "Sent message: {} to {}".format(message, destination)
 
 def handle_poll(client, text):
     print(text)

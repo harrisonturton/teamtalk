@@ -13,6 +13,6 @@ def getenv(env_variable_key):
     """
     env = os.environ.get(env_variable_key, None)
     if not env:
-        print(f"Error: environment variable {env_variable_key} is not set in the .env file.")
+        print("Error: environment variable ", env_variable_key, " is not set in the .env file.")
         sys.exit(1)
     return env

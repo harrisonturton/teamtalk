@@ -7,7 +7,7 @@ def handle_send(client, text):
     user = params[0]
     message = " ".join(params[1:])
     resp = client.messageUser(user, message)
-    if resp.status_code != 200:
+    if resp.get("status_code") != 200:
         return "Failed to send message!"
     return "Sent message: " + message + " to " + user
 

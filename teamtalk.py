@@ -18,17 +18,17 @@ print("--------------")
 app = Flask(__name__)
 client = Client(BOT_ACC_TOKEN)
 
-def handleSend(text):
+def handle_send(text):
     print(text)
     return "Got send: " + text
 
-def handlePoll(text):
+def handle_poll(text):
     print(text)
     return "Got poll: " + text
 
-commands = {
-    "send": handleSend,
-    "poll": handlePoll
+command_handlers = {
+    "/send": handle_send,
+    "/poll": handle_poll
 }
 
 @app.route("/commands", methods=["POST"])
@@ -41,9 +41,10 @@ def commands():
     # Parse command and delegate to handler
     command = request.form.get("command", None)
     text = request.form.get("text", None)
-    if command not in commands:
+    print(command)
+    if command not in command_handlers:
         abort(400)
-    return commands[command](text)
+    return command_handlers[command](text)
 
 # Finally, run the damn thing
 if __name__ == "__main__":

@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify, abort
+from flask import Flask, request, jsonify, abort, make_response
 from util import getenv 
 from client import Client
 from commands import handle
+import json
 
 # Load constants from .env file
 VERIFICATION_TOKEN = getenv("VERIFICATION_TOKEN")
@@ -22,9 +23,9 @@ client = Client(BOT_ACC_TOKEN)
 # Handles slash commands
 @app.route("/commands", methods=["POST"])
 def commands():
-    print(request.form)
+    # print(request.form)
     # Validate the token
-    token = request.form.get("token", None)
+    token = request.form.get("token")
     if token != VERIFICATION_TOKEN:
         abort(401)
     # Delegate command to handlers
@@ -32,13 +33,19 @@ def commands():
 
 # Handles dialog submissions, button clicks, etc
 @app.route("/callbacks", methods=["POST"])
-def commands():
-    print(request.form)
+def callbacks():
+    payload = request.form.get("payload")
+    if not payload:
+        abort(500)
+    data = json.loads(payload)
+    print(data)
     # Validate token
-    token = request.form.get("token", None)
+    token = data.get("token")
     if token != VERIFICATION_TOKEN:
         abort(401)
-    return "OK!"
+    if data.get("type") == "dialog_submission":
+        print("Handling dialog submission")
+    return make_response("", 200)
 
 
 # Finally, run the damn thing

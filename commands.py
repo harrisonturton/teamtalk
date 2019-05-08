@@ -1,9 +1,15 @@
 from flask import abort
 
 def handle_send(client, text):
-    print(text)
-    client.messageUser("@harrisonturton", "Hello harry")
-    return "Got send: " + text
+    params = text.split(" ")
+    if len(params) <= 1:
+        return "Usage: `/send @user message` or `/send #channel message`"
+    user = params[0]
+    message = " ".join(params[1:])
+    resp = client.messageUser(user, message)
+    if resp.status_code != 200:
+        return "Failed to send message!"
+    return "Sent message: " + message + " to " + user
 
 def handle_poll(client, text):
     print(text)

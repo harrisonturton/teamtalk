@@ -2,7 +2,7 @@ from flask import abort
 
 def handle_send(client, text):
     print(text)
-    client.messageUser("@harry", "Hello harry")
+    client.messageUser("@harrisonturton", "Hello harry")
     return "Got send: " + text
 
 def handle_poll(client, text):

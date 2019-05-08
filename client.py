@@ -12,3 +12,10 @@ class Client:
             channel=channel,
             text=message
         )
+    # Open a dialog
+    def openDialog(self, trigger_id, dialog):
+        return self.client.api_call(
+            "open.dialog",
+            trigger_id=trigger_id,
+            dialog=dialog
+        )

@@ -27,9 +27,7 @@ def commands():
     if token != VERIFICATION_TOKEN:
         abort(401)
     # Delegate command to handlers
-    command = request.form.get("command", None)
-    text = request.form.get("text", None)
-    return handle(client, command, text)
+    return handle(client, request)
 
 # Finally, run the damn thing
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from util import getenv 
 from slackclient import SlackClient
 
@@ -19,8 +19,8 @@ app = Flask(__name__)
 slack_client = SlackClient(VERIFICATION_TOKEN)
 
 @app.route("/send", methods=["POST"])
-def hello(data):
-    print(data)
+def hello():
+    print(request.data)
     slack_client.api_call(
         "chat.postMessage",
         channel="general",

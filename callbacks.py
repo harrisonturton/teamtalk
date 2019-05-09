@@ -18,8 +18,19 @@ def handle_dialog(client, data):
     client.message(channel, create_poll(name["poll-question"], options))
     return make_response("", 200)
 
+def handle_block_action(client, data):
+    if data["actions"][0]["value"] != "vote-btn":
+        print("Not a vote!")
+        return
+    resp = client.updateMessage(data["channel"]["id"], data["message"]["ts"], "Voted!")
+    if not resp.get("ok"):
+        print(resp)
+        print("Failed to update poll")
+    return make_response("", 200)
+
 handlers = {
-    "dialog_submission": handle_dialog
+    "dialog_submission": handle_dialog,
+    "block_actions": handle_block_action
 }
 
 def handle_callback(client, data):

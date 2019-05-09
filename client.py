@@ -19,6 +19,13 @@ class Client:
             text=message,
             user=user
         )
+    def updateMessage(self, channel, timestamp, message):
+        return self.client.api_call(
+            "chat.update",
+            channel=channel,
+            ts=timestamp,
+            message=message
+        )
     # Open a dialog
     def openDialog(self, trigger_id, dialog):
         return self.client.api_call(

@@ -12,6 +12,12 @@ class Client:
             channel=channel,
             text=message
         )
+    def messageBlocks(self, channel, blocks):
+        return self.client.api_call(
+            "chat.postMessage",
+            channel=channel,
+            blocks=blocks
+        )
     def messageEphemeral(self, channel, user, message):
         return self.client.api_call(
             "chat.postEphemeral",

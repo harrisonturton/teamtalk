@@ -15,7 +15,7 @@ def handle_dialog(client, data):
     if len(options) < 2:
         client.messageEphemeral(channel, data["user"]["id"], "Couldn't create the poll – you need to specify at least two options!")
         return make_response("", 200)
-    client.message(channel, create_poll(name["poll-question"], options))
+    client.messageBlocks(channel, create_poll(poll_options["poll-question"], options))
     return make_response("", 200)
 
 def handle_block_action(client, data):
@@ -58,20 +58,32 @@ def create_poll(name, options):
         # Ignore None types
         if not option:
             continue
-        poll.append({
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": option,
-            },
-            "accessory": {
-                "type": "button",
+        poll += [
+            {
+                "type": "section",
                 "text": {
-                    "type": "plain_text",
-                    "emoji": True,
-                    "text": "Vote"
+                    "type": "mrkdwn",
+                    "text": option,
                 },
-                "value": "vote-btn"
+                "accessory": {
+                    "type": "button",
+                    "text": {
+                        "type": "plain_text",
+                        "emoji": True,
+                        "text": "Vote"
+                    },
+                    "value": "vote-btn"
+                }
+            },
+            {
+        	"type": "context",
+                "elements": [
+                    {
+                        "type": "plain_text",
+                        "emoji": True,
+                        "text": "3/5 votes"
+                    }
+                ]
             }
-        })
+        ]
     return poll

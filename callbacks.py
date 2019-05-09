@@ -3,7 +3,6 @@ from flask import abort, make_response, jsonify
 def handle_dialog(client, data):
     channel = data["channel"]["id"]
     poll_options = data.get("submission")
-    print(poll_options)
     if not poll_options:
         abort(400)
     options = list(filter(lambda x: x is not None, [

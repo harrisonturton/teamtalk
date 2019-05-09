@@ -30,7 +30,16 @@ class Client:
             "chat.update",
             channel=channel,
             ts=timestamp,
-            message=message
+            as_user=True,
+            blocks=[
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "*{}*".format(message)
+                    },
+                },
+            ]
         )
     # Open a dialog
     def openDialog(self, trigger_id, dialog):

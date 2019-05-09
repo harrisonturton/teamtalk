@@ -12,7 +12,31 @@ def handle_send(client, text, trigger_id):
     return "Sent message: {} to {}".format(message, destination)
 
 def handle_poll(client, text, trigger_id):
-    resp = client.openDialog(trigger_id, {
+    resp = client.openDialog(trigger_id, create_poll_dialog())
+    if not resp.get("ok"):
+        print(resp)
+        return "Failed to create poll."
+    return make_response("", 200)
+
+# Map the user-facing slash command to the
+# relevant handler.
+handlers = {
+    "/send": handle_send,
+    "/poll": handle_poll
+}
+
+def handle_command(client, request):
+    command = request.form.get("command")
+    text = request.form.get("text")
+    trigger_id = request.form.get("trigger_id")
+    if command not in handlers:
+        abort(400)
+    return handlers[command](client, text, trigger_id)
+
+# Dialogs and formatted messages
+
+def create_poll_dialog():
+    return {
         "title": "Create New Poll",
         "submit_label": "Create",
         "callback_id": "new-poll",
@@ -48,23 +72,4 @@ def handle_poll(client, text, trigger_id):
                 "optional": True
             }
         ]
-    })
-    if not resp.get("ok"):
-        print(resp)
-        return "Failed to create poll."
-    return make_response("", 200)
-
-# Map the user-facing slash command to the
-# relevant handler.
-handlers = {
-    "/send": handle_send,
-    "/poll": handle_poll
-}
-
-def handle_command(client, request):
-    command = request.form.get("command")
-    text = request.form.get("text")
-    trigger_id = request.form.get("trigger_id")
-    if command not in handlers:
-        abort(400)
-    return handlers[command](client, text, trigger_id)
+    }
